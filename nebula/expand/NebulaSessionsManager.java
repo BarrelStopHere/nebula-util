@@ -1,10 +1,7 @@
 package com.jwwd.flow.nebula.expand;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.jwwd.common.redis.service.RedisService;
 import com.jwwd.flow.nebula.config.CustomCondition;
-import com.jwwd.flow.nebula.space.Space;
 import com.vesoft.nebula.client.graph.NebulaPoolConfig;
 import com.vesoft.nebula.client.graph.SessionsManagerConfig;
 import com.vesoft.nebula.client.graph.data.HostAddress;
@@ -28,8 +25,9 @@ import javax.annotation.PreDestroy;
 public class NebulaSessionsManager {
 
     private final Environment env;
-    private final Map<Space, ExpandSessionManager> sessionsManagerMap = new HashMap<>();
+    private final Map<String, ExpandSessionManager> sessionsManagerMap = new HashMap<>();
     private final List<HostAddress> hostAddresses;
+    private final List<String> spaces;
 
     @Autowired
     public NebulaSessionsManager(Environment env) {
@@ -44,11 +42,16 @@ public class NebulaSessionsManager {
             String[] parts = conn.split(":");
             hostAddresses.add(new HostAddress(parts[0], Integer.parseInt(parts[1])));
         }
+        String spaceProperty = env.getProperty("nebula.spaces");
+        assert spaceProperty != null;
+        String[] spaceArray = spaceProperty.split(",");
+        this.spaces = Arrays.asList(spaceArray);
+
     }
 
     @PostConstruct
     public void init() {
-        for (Space space : Space.values()) {
+        for (String space : spaces) {
             sessionsManagerMap.putIfAbsent(space, of(space));
         }
     }
@@ -66,11 +69,11 @@ public class NebulaSessionsManager {
     }
 
     @Bean
-    public Map<Space, ExpandSessionManager> nebulaSessionsManagers() {
+    public Map<String, ExpandSessionManager> nebulaSessionsManagers() {
         return sessionsManagerMap;
     }
 
-    private ExpandSessionManager of(Space space) {
+    private ExpandSessionManager of(String space) {
         NebulaPoolConfig poolConfig = new NebulaPoolConfig();
         poolConfig.setMaxConnSize(100);
 
@@ -78,7 +81,7 @@ public class NebulaSessionsManager {
         managerConfig.setAddresses(Lists.newArrayList(getHostAddress()));
         managerConfig.setUserName(env.getProperty("nebula.username"));
         managerConfig.setPassword(env.getProperty("nebula.password"));
-        managerConfig.setSpaceName(space.getKey());
+        managerConfig.setSpaceName(space);
         managerConfig.setReconnect(true);
         managerConfig.setPoolConfig(poolConfig);
 

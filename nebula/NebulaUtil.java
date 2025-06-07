@@ -4,7 +4,7 @@ import com.jwwd.common.core.utils.SpringUtils;
 import com.jwwd.common.core.utils.StringUtils;
 import com.jwwd.flow.nebula.annotation.NebulaIgnore;
 import com.jwwd.flow.nebula.expand.*;
-import com.jwwd.flow.nebula.space.Space;
+import com.jwwd.flow.enums.Space;
 import com.vesoft.nebula.Row;
 import com.vesoft.nebula.Value;
 import com.vesoft.nebula.client.graph.data.ResultSet;
@@ -22,9 +22,9 @@ import java.util.*;
 @Slf4j
 public class NebulaUtil {
     private volatile static NebulaUtil instance;
-    private final Map<Space, ExpandSessionManager> nebulaSessionsManagers;
+    private final Map<String, ExpandSessionManager> nebulaSessionsManagers;
 
-    private NebulaUtil(Map<Space, ExpandSessionManager> nebulaSessionsManagers) {
+    private NebulaUtil(Map<String, ExpandSessionManager> nebulaSessionsManagers) {
         this.nebulaSessionsManagers = nebulaSessionsManagers;
     }
 
@@ -39,11 +39,7 @@ public class NebulaUtil {
         return instance;
     }
 
-    public <T> List<T> list(String nGql, Class<T> clazz) {
-        return list(nGql, Space.COMPANY_INFO, clazz);
-    }
-
-    public <T> List<T> list(String nGql, Space space, Class<T> clazz) {
+    public <T> List<T> list(String nGql, String space, Class<T> clazz) {
         ResultSet resultSet = execute(nGql, space);
         if (resultSet == null) {
             return Collections.emptyList();
@@ -51,20 +47,20 @@ public class NebulaUtil {
         return resultSetToList(resultSet, clazz);
     }
 
-    public <T> void insertVertex(List<T> entities, String tagName, Space space) {
+    public <T> void insertVertex(List<T> entities, String tagName, String space) {
         VertexConvert<T> converter = new VertexConvert<>(entities);
         String nGql = converter.build(tagName);
         execute(nGql, space);
     }
 
-    public <T> void insertEdge(List<T> entities, String edgeName, Space space) {
+    public <T> void insertEdge(List<T> entities, String edgeName, String space) {
         EdgeConvert<T> converter = new EdgeConvert<>(entities);
         String nGql = converter.build(edgeName);
         execute(nGql, space);
     }
 
     // 执行nGql语句
-    public ResultSet execute(String nGql, Space space) {
+    public ResultSet execute(String nGql, String space) {
         ExpandSessionManager sessionManager = nebulaSessionsManagers.get(space);
         ExpandSessionWrapper sessionWrapper = null;
         try {

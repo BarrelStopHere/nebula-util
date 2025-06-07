@@ -19,7 +19,7 @@ public class CustomCondition implements Condition {
         String url = env.getProperty("nebula.url");
 
         // 处理默认值和空值
-        boolean isOpen = "true".equalsIgnoreCase(enabled) && enabled != null;
+        boolean isOpen = "true".equalsIgnoreCase(enabled);
         boolean b = (url != null && !url.trim().isEmpty()) && isOpen;
         log.info("nebula启用状态: {} -> {}", enabled, b);
         return b;

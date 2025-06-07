@@ -1,7 +1,5 @@
 package com.jwwd.flow.nebula.annotation;
 
-import com.jwwd.flow.nebula.space.Space;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
