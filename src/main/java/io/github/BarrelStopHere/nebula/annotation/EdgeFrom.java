@@ -1,4 +1,4 @@
-package com.jwwd.flow.nebula.annotation;
+package io.github.BarrelStopHere.nebula.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,5 +7,5 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Vid {
+public @interface EdgeFrom {
 }

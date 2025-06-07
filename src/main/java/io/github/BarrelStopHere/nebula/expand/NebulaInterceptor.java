@@ -1,4 +1,4 @@
-package com.jwwd.flow.nebula.expand;
+package io.github.BarrelStopHere.nebula.expand;
 
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;

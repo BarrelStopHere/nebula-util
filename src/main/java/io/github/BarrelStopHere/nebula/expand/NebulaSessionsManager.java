@@ -1,4 +1,4 @@
-package com.jwwd.flow.nebula.expand;
+package io.github.BarrelStopHere.nebula.expand;
 
 import com.google.common.collect.Lists;
 import com.jwwd.flow.nebula.config.CustomCondition;

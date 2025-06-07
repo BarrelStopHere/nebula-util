@@ -1,9 +1,9 @@
-package com.jwwd.flow.nebula.expand;
+package io.github.BarrelStopHere.nebula.expand;
 
-import com.jwwd.flow.nebula.annotation.EdgeFrom;
-import com.jwwd.flow.nebula.annotation.EdgeRank;
-import com.jwwd.flow.nebula.annotation.EdgeTo;
-import com.jwwd.flow.nebula.annotation.NebulaIgnore;
+import io.github.BarrelStopHere.nebula.annotation.EdgeFrom;
+import io.github.BarrelStopHere.nebula.annotation.EdgeRank;
+import io.github.BarrelStopHere.nebula.annotation.EdgeTo;
+import io.github.BarrelStopHere.nebula.annotation.NebulaIgnore;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;

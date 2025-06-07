@@ -1,4 +1,4 @@
-package com.jwwd.flow.nebula.expand;
+package io.github.BarrelStopHere.nebula.expand;
 
 import com.vesoft.nebula.client.graph.SessionsManagerConfig;
 import com.vesoft.nebula.client.graph.data.ResultSet;

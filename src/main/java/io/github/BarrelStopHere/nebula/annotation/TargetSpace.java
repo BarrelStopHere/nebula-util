@@ -1,4 +1,4 @@
-package com.jwwd.flow.nebula.annotation;
+package io.github.BarrelStopHere.nebula.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

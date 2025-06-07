@@ -1,4 +1,4 @@
-package com.jwwd.flow.nebula.config;
+package io.github.BarrelStopHere.nebula.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Condition;
